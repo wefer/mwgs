@@ -28,3 +28,16 @@ mwgs.py /path_to/sample_folder/
 - Picard 1.141
 - Samtools
 - BWA
+
+
+```
+$ cat config.py
+URI = 'https://example-lims.domain.com'
+USER = 'lims_user'
+PASSWORD = 'lims_password'
+ENTREZ_EMAIL = 'user@example.com' #Can be any email-address
+#System specific constants
+REF_FOLDER = '/mnt/hds/proj/bioinfo/MICROBIAL/REFERENCES/'
+PICARD_JAR = '/mnt/hds/proj/bioinfo/MICROBIAL/picard-tools-1.141/picard.jar'
+JAVA = '/mnt/hds/proj/bioinfo/mip/modules/jre1.7.0_45/bin/java'
+```
