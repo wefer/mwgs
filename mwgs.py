@@ -33,7 +33,7 @@ class Sample(object):
 		self.total_reads, self.mapped_reads = reads_aligned(self.bamfile)
 		self.insertmetricsfile, self.inserthistfile = get_insert_size(self.bamfile)
 		self.median_insert = self.gather_insert_metrics()
-		self.duplication_rate =self.gather_duplication_metrics()
+		self.duplication_rate = self.gather_duplication_metrics()
 
 	def gather_insert_metrics(self):
 		with open(self.insertmetricsfile, 'r') as f:

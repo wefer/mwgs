@@ -30,6 +30,7 @@ mwgs.py /path_to/sample_folder/
 - BWA
 
 
+###Example config file
 ```
 $ cat config.py
 URI = 'https://example-lims.domain.com'
