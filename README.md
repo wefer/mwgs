@@ -24,6 +24,7 @@ mwgs.py /path_to/sample_folder/
 - Median insert size
 
 ###Requirements
+- Python 3.x
 - Java 1.7
 - Picard 1.141
 - Samtools
