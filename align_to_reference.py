@@ -4,7 +4,7 @@ import subprocess
 import os
 import sys
 
-from config import PICARD_JAR
+from config import PICARD_JAR, JAVA
 
 #Temporary trap for output
 DEVNULL=open(os.devnull, 'wb')
@@ -41,7 +41,8 @@ def remove_duplicates(bamfile):
 	"""
 	bam_rmdup = bamfile.replace('.bam', '_rmdup.bam')
 	dup_metrics = bamfile.replace('.bam', '_dupmetr.txt')
-	cmd = ['java', '-jar', PICARD_JAR, 
+	cmd = [JAVA, '-jar', PICARD_JAR,
+			'MarkDuplicates', 
 			'I={}'.format(bamfile),
 			'O={}'.format(bam_rmdup),
 			'M={}'.format(dup_metrics),

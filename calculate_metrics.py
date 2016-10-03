@@ -2,7 +2,7 @@
 
 import subprocess
 
-from config import PICARD_JAR
+from config import PICARD_JAR, JAVA
 
 def get_insert_size(bamfile):
 	"""
@@ -10,7 +10,7 @@ def get_insert_size(bamfile):
 	"""
 	output = bamfile.rstrip('.bam') + '.insertmetrics.txt'
 	hist = bamfile.rstrip('.bam') + '.inserthistogram.pdf'
-	cmd = ['java',
+	cmd = [JAVA,
 			'-jar',
 			PICARD_JAR,
 			'CollectInsertSizeMetrics',
