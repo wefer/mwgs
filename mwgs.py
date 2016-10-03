@@ -17,7 +17,7 @@ class Sample(object):
 		self.sample_name = path.basename(path.normpath(sample_path))
 		self.sample_ref_nc = get_reference_id(self.sample_name)
 		self.sample_reference = Reference(self.sample_ref_nc)
-		self.r1 = glob.glob(sample_path + '/*_1.fastq.gz') 
+		self.r1 = glob.glob(sample_path + '/*_1.fastq.gz')
 		self.r2 = [x.replace('_1.fastq.gz', '_2.fastq.gz') for x in self.r1]
 
 	def __str__(self):
@@ -25,7 +25,11 @@ class Sample(object):
 
 	def run_qc(self):
 		prefix = path.join(self.sample_path, self.sample_name)
-		self.bamfile, self.dupmetrics = remove_duplicates(perform_alignment(prefix, self.r1, self.r2, self.sample_reference.fasta_file))
+		self.bamfile, self.dupmetrics = remove_duplicates(perform_alignment(
+															prefix,
+															self.r1,
+															self.r2,
+															self.sample_reference.fasta_file))
 		self.total_reads, self.mapped_reads = reads_aligned(self.bamfile)
 		self.insertmetricsfile, self.inserthistfile = get_insert_size(self.bamfile)
 		self.median_insert = self.gather_insert_metrics()
@@ -61,4 +65,3 @@ if __name__ == '__main__':
 	s = Sample(sample_path)
 	s.run_qc()
 	s.dump_metrics()
-
