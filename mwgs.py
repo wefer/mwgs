@@ -48,18 +48,17 @@ class Sample(object):
 
 
 	def dump_metrics(self):
-		with open(os.join(self.sample_path, 'stats.csv'), 'w') as f:
-			f.write('')
-	
-	def print_metrics(self):
-		print('Median Insert Size: {}'.format(self.median_insert))
-		print('Duplication Rate: {}'.format(self.duplication_rate))
-		print('Fraction aligned to Reference: {}'.format(self.mapped_reads/self.total_reads))
+		with open(path.join(self.sample_path, 'statistics.yml'), 'w') as f:
+			f.write('Sample Name : {}\n'.format(self.sample_name))
+			f.write('Reference Genome : {}\n'.format(self.sample_ref_nc))
+			f.write('Median Insert Size : {}\n'.format(self.median_insert))
+			f.write('Duplication Rate : {}\n'.format(self.duplication_rate))
+			f.write('Fraction aligned to Reference : {}\n'.format(self.mapped_reads/self.total_reads))
+
 
 if __name__ == '__main__':
 	sample_path = sys.argv[1]
 	s = Sample(sample_path)
 	s.run_qc()
-	s.print_metrics()
-
+	s.dump_metrics()
 
