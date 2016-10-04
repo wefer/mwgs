@@ -5,10 +5,10 @@ import sys
 from os import path
 import glob
 
-from reference_handling import Reference
-from get_lims_info import get_reference_id
-from align_to_reference import perform_alignment, remove_duplicates
-from calculate_metrics import get_insert_size, reads_aligned
+from .reference_handling import Reference
+from .get_lims_info import get_reference_id
+from .align_to_reference import perform_alignment, remove_duplicates
+from .calculate_metrics import get_insert_size, reads_aligned
 
 
 class Sample(object):

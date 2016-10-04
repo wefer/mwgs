@@ -34,9 +34,9 @@ mwgs.py /path_to/sample_folder/
 ###Example config file
 ```
 $ cat config.py
-URI = 'https://example-lims.domain.com'
-USER = 'lims_user'
-PASSWORD = 'lims_password'
+LIMS_URI = 'https://example-lims.domain.com'
+LIMS_USER = 'lims_user'
+LIMS_PASSWORD = 'lims_password'
 ENTREZ_EMAIL = 'user@example.com' #Can be any email-address
 #System specific constants
 REF_FOLDER = '/mnt/hds/proj/bioinfo/MICROBIAL/REFERENCES/'

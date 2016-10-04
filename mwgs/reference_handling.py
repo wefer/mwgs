@@ -3,7 +3,8 @@
 import os
 from Bio import Entrez
 from subprocess import Popen
-from config import ENTREZ_EMAIL, REF_FOLDER
+
+from .config import ENTREZ_EMAIL, REF_FOLDER
 
 #Set up a temporary trap for output
 DEVNULL = open(os.devnull, 'wb')

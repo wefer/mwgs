@@ -2,7 +2,7 @@
 
 import subprocess
 
-from config import PICARD_JAR, JAVA
+from .config import PICARD_JAR, JAVA
 
 def get_insert_size(bamfile):
 	"""

@@ -4,7 +4,7 @@ import subprocess
 import os
 import sys
 
-from config import PICARD_JAR, JAVA
+from .config import PICARD_JAR, JAVA
 
 #Temporary trap for output
 DEVNULL=open(os.devnull, 'wb')
