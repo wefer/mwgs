@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from genologics import lims
-from config import LIMS_URI, LIMS_USER, LIMS_PASSWORD
+from mwgs.docs.config import LIMS_URI, LIMS_USER, LIMS_PASSWORD
 
 def get_reference_id(sample_name):
   """
