@@ -29,5 +29,7 @@ setup(
 	url = 'https://github.com/Clinical-Genomics/mwgs',
 	author = 'Hugo Wefer',
 	author_email = 'hugo.wefer@scilifelab.se',
-	packages = find_packages(exclude=['tests*'])
+	packages = find_packages(exclude=['tests*']),
+	entry_points = {'console_scripts' : ['mwgs=mwgs.cli:main',]}
 	)
+
