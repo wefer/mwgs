@@ -25,3 +25,4 @@ def main():
 	options = docopt(__doc__, version=VERSION)
 	for k, v in options.iteritems():
 		 
+main()
