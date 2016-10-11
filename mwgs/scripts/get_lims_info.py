@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
 from genologics import lims
-from mwgs.docs.config import LIMS_URI, LIMS_USER, LIMS_PASSWORD
+from genologics.config import BASEURI, USERNAME, PASSWORD
+
 
 def get_reference_id(sample_name):
   """
@@ -10,6 +11,6 @@ def get_reference_id(sample_name):
   Outputs: Reference genome - NCBI accession number
   """
   
-  l = lims.Lims(LIMS_URI, LIMS_USER, LIMS_PASSWORD)
+  l = lims.Lims(BASEURI, USERNAME, PASSWORD)
   s = l.get_samples(sample_name)[0]
   return s.udf.get('Reference Genome Microbial', '')
