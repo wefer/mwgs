@@ -51,6 +51,6 @@ class Reference(object):
 		Index reference sequence with bwa
 		"""
 		print('Indexing reference genome...')
-		p = Popen(['/mnt/hds/proj/bioinfo/MICROBIAL/bwa-0.7.12/bwa', 'index', self.fasta_file], stderr=DEVNULL, stdout=DEVNULL)
+		p = Popen(['/mnt/hds/proj/bioinfo/MICROBIAL/bwa', 'index', self.fasta_file], stderr=DEVNULL, stdout=DEVNULL)
 		p.wait()
 		print('Indexing finished')

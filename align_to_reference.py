@@ -18,7 +18,7 @@ def perform_alignment(sample_name, pe_reads_1, pe_reads_2, ref, threads=1):
 	"""
 	bamfile_prefix = sample_name + '_srt'
 	
-	cmd1 = ['/mnt/hds/proj/bioinfo/MICROBIAL/bwa-0.7.12/bwa', 'mem', '-t', str(threads), '-M', '-R', '@RG\tID:foo\tSM:bar', 
+	cmd1 = ['/mnt/hds/proj/bioinfo/MICROBIAL/bwa', 'mem', '-t', str(threads), '-M', 
 			ref, 
 			'<(cat {})'.format(*pe_reads_1), 
 			'<(cat {})'.format(*pe_reads_2)]

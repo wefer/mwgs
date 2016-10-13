@@ -4,6 +4,7 @@ import logging
 import sys
 from os import path
 import glob
+import subprocess
 
 from reference_handling import Reference
 from get_lims_info import get_reference_id
@@ -36,6 +37,7 @@ class Sample(object):
 		self.insertmetricsfile, self.inserthistfile = get_insert_size(self.bamfile)
 		self.median_insert = self.gather_insert_metrics()
 		self.duplication_rate = self.gather_duplication_metrics()
+		self.above_10X = self.gather_fraction_above_10X()
 
 	def gather_insert_metrics(self):
 		with open(self.insertmetricsfile, 'r') as f:
@@ -49,9 +51,19 @@ class Sample(object):
 			l = ''
 			while not l.startswith('LIBRARY'):
 				l = f.readline()
-			f.readline()
 			return f.readline().split('\t')[-2]
 
+
+	def gather_fraction_above_10X(self):
+		cmd = ['samtools', 'depth', self.bamfile]
+		p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+		proc_out, proc_error = p.communicate()
+		lines = proc_out.decode('utf-8').split('\n')
+		bases_below_10 = 0
+		for line in lines[:-1]:
+			if int(line.split('\t')[2]) < 10:
+				bases_below_10 +=1
+		return (len(lines) - bases_below_10)/len(lines) 
 
 	def dump_metrics(self):
 		with open(path.join(self.sample_path, 'statistics.yml'), 'w') as f:
@@ -60,7 +72,7 @@ class Sample(object):
 			f.write('Median Insert Size : {}\n'.format(self.median_insert))
 			f.write('Duplication Rate : {}\n'.format(self.duplication_rate))
 			f.write('Fraction aligned to Reference : {}\n'.format(self.mapped_reads/self.total_reads))
-
+			f.write('Fraction of bases with cov >= 10X : {}\n'.format(self.above_10X) )
 
 if __name__ == '__main__':
 	sample_path = sys.argv[1]
