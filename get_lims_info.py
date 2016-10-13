@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from genologics import lims
-from config import URI, USER, PASSWORD
+from genologics.config import BASEURI, USERNAME, PASSWORD
 
 def get_reference_id(sample_name):
 	"""
@@ -10,6 +10,6 @@ def get_reference_id(sample_name):
 	Outputs: Reference genome - NCBI accession number
 	"""
 	
-	l = lims.Lims(URI, USER, PASSWORD)
-	s = l.get_samples(sample_name)[0]
-	return s.udf.get('Reference Genome Microbial', '')
+	l = lims.Lims(BASEURI, USERNAME, PASSWORD)
+	s = lims.Sample(l, id=sample_name)
+	return s.udf.get('Reference Genome', '')

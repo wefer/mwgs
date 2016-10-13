@@ -16,6 +16,8 @@ class Sample(object):
 		self.sample_path = sample_path
 		self.sample_name = path.basename(path.normpath(sample_path))
 		self.sample_ref_nc = get_reference_id(self.sample_name)
+		if not self.sample_ref_nc:
+			raise ValueError('No reference found in LIMS')
 		self.sample_reference = Reference(self.sample_ref_nc)
 		self.r1 = glob.glob(sample_path + '/*_1.fastq.gz')
 		self.r2 = [x.replace('_1.fastq.gz', '_2.fastq.gz') for x in self.r1]
