@@ -3,7 +3,7 @@
 from genologics import lims
 from genologics.config import BASEURI, USERNAME, PASSWORD
 
-def get_reference_id(sample_name):
+def get_reference_id(sample_id):
 	"""
 	Get reference genome for a sample from LIMS
 	Inputs: Sample ID
@@ -11,5 +11,5 @@ def get_reference_id(sample_name):
 	"""
 	
 	l = lims.Lims(BASEURI, USERNAME, PASSWORD)
-	s = lims.Sample(l, id=sample_name)
+	s = lims.Sample(l, id=sample_id)
 	return s.udf.get('Reference Genome', '')
