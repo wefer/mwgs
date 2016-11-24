@@ -1,5 +1,4 @@
 #/usr/bin/env python
-
 import logging
 import sys
 from os import path

@@ -1,0 +1,56 @@
+{% extends "bootstrap/base.html" %}
+
+{% block content %}
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div id="duplicationRate"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="http://code.highcharts.com/highcharts.js"></script>
+
+  <script type="text/javascript" charset="utf-8" async defer>
+    $(function() {
+        $("#duplicationRate").highcharts({
+          chart: {
+            type: "spline",
+            zoomType: "x"
+          },
+          title: {
+            text: "Duplication rate over time"
+          },
+          yAxis: {
+            title: {
+              text: "% duplications"
+            }
+          },
+          plotOptions: {
+            spline: {
+              marker: {
+                enabled: true
+              },
+              tooltip: {
+                headerFormat: '<b>{point.key}</b><br>',
+                pointFormat: '{point.y} %'
+              }
+            }
+          },
+          series: [{
+            color: 'rgba(223, 83, 83, .5)',
+            data: {{ duplications|tojson|safe }}
+          }]
+        })
+    })
+  </script>
+{% endblock %}

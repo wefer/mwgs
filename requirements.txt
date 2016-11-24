@@ -1,3 +1,9 @@
 biopython==1.68
 genologics==0.3.8.post0
 requests==2.11.1
+
+click
+PyYaml
+Flask
+Flask-Bootstrap
+sqlservice

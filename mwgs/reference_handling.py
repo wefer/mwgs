@@ -10,6 +10,7 @@ DEVNULL = open(os.devnull, 'wb')
 
 Entrez.email = ENTREZ_EMAIL
 
+
 class Reference(object):
 	"""
 	Reference genome object
