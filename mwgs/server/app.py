@@ -15,9 +15,9 @@ app.config.from_object(__name__)
 
 @app.route('/')
 def index():
-    
     projects = db.query(Sample.project_id).distinct()
     return render_template('index.html', projects=projects)
+
 
 @app.route('/projects/<project_id>')
 def project(project_id):
@@ -25,8 +25,9 @@ def project(project_id):
     duplications = api.plot_data(samples, "duplication_rate")
     mapped = api.plot_data(samples, "mapped_rate")
     coverage = api.plot_data(samples, "coverage_10x")
-    return render_template('project.html',samples=samples, project_id=project_id, 
-    						duplications=duplications, mapped=mapped, coverage=coverage)
+    return render_template('project.html', samples=samples, project_id=project_id,
+                           duplications=duplications, mapped=mapped, coverage=coverage)
+
 
 # hookup extensions to app
 Bootstrap(app)

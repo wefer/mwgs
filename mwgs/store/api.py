@@ -20,8 +20,9 @@ def build_sample(data):
     """Prepare data to match database interface."""
     parsed = {
         'lims_id': data['Sample Name'],
-        'project_id' : data['Project'],
+        'project_id': data['Project'],
         'reference_genome': data['Reference Genome'],
+        'total_reads': data['Total Reads'],
         'insert_size': data['Median Insert Size'],
         'duplication_rate': data['Duplication Rate'],
         'mapped_rate': data['Fraction aligned to Reference'],
@@ -29,9 +30,11 @@ def build_sample(data):
     }
     return parsed
 
-def project(db,project_id):
-    query=db.Sample.filter_by(project_id=project_id)
+
+def project(db, project_id):
+    query = db.Sample.filter_by(project_id=project_id)
     return query
+
 
 def plot_data(samples, datafield):
     """Calculate times it takes to analyze a sample."""
