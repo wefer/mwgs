@@ -3,7 +3,7 @@ import os
 
 from flask import Flask, render_template
 from flask_bootstrap import Bootstrap
-
+from mwgs.store.models import Sample
 from mwgs.store import api
 
 app = Flask(__name__)
@@ -15,9 +15,18 @@ app.config.from_object(__name__)
 
 @app.route('/')
 def index():
-    duplications = api.duplication_rate(db)
-    return render_template('index.html', duplications=duplications)
+    
+    projects = db.query(Sample.project_id).distinct()
+    return render_template('index.html', projects=projects)
 
+@app.route('/projects/<project_id>')
+def project(project_id):
+    samples = db.Sample.find(project_id=project_id)
+    duplications = api.plot_data(samples, "duplication_rate")
+    mapped = api.plot_data(samples, "mapped_rate")
+    coverage = api.plot_data(samples, "coverage_10x")
+    return render_template('project.html',samples=samples, project_id=project_id, 
+    						duplications=duplications, mapped=mapped, coverage=coverage)
 
 # hookup extensions to app
 Bootstrap(app)

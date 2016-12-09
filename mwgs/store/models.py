@@ -12,6 +12,7 @@ class Sample(Model):
     __tablename__ = 'sample'
 
     id = Column(types.Integer, primary_key=True)
+    project_id = Column(types.String(32), nullable=False)
     lims_id = Column(types.String(32), unique=True)
     created_at = Column(types.DateTime, default=datetime.now)
 
