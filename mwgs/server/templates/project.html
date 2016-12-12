@@ -36,6 +36,7 @@
       <tr>
         <th>Sample</th>
         <th>Reference Genome</th>
+        <th>Total Reads</th>
         <th>Median Insert Size</th>
         <th>Duplication Rate</th>
         <th>Mapped rate</th>
@@ -48,6 +49,7 @@
       <tr>
         <td>{{ sample.lims_id }}</td>
         <td>{{ sample.reference_genome }}</td>
+        <td class="text-right">{{ sample.total_reads }}</td>
         <td class="text-right">{{ sample.insert_size }}</td>
         <td class="text-right">{{ sample.duplication_rate | round(3) }}</td>
         <td class="text-right">{{ sample.mapped_rate | round(3) }}</td>

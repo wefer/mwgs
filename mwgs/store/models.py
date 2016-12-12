@@ -17,6 +17,7 @@ class Sample(Model):
     created_at = Column(types.DateTime, default=datetime.now)
 
     reference_genome = Column(types.String(32))
+    total_reads = Column(types.Integer)
     insert_size = Column(types.Integer)
     duplication_rate = Column(types.Float)
     mapped_rate = Column(types.Float)

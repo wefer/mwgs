@@ -1,8 +1,6 @@
 #!/usr/bin/env python
-
 import subprocess
 import os
-import sys
 
 from config import PICARD_JAR, JAVA
 
