@@ -6,10 +6,10 @@ import glob
 import subprocess
 import yaml
 
-from .reference_handling import Reference
-from .get_lims_info import get_lims_sample, get_reference_id
-from .align_to_reference import perform_alignment, remove_duplicates
-from .calculate_metrics import get_insert_size, reads_aligned
+from mwgs.reference_handling import Reference
+from mwgs.get_lims_info import get_lims_sample, get_reference_id
+from mwgs.align_to_reference import perform_alignment, remove_duplicates
+from mwgs.calculate_metrics import get_insert_size, reads_aligned
 
 
 class Sample(object):
