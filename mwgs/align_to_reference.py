@@ -4,8 +4,9 @@ import os
 
 from config import PICARD_JAR, JAVA
 
-#Temporary trap for output
-DEVNULL=open(os.devnull, 'wb')
+# Temporary trap for output
+DEVNULL = open(os.devnull, 'wb')
+
 
 def perform_alignment(sample_name, pe_reads_1, pe_reads_2, ref, threads=1):
 	"""
@@ -16,9 +17,9 @@ def perform_alignment(sample_name, pe_reads_1, pe_reads_2, ref, threads=1):
 	"""
 	bamfile_prefix = sample_name + '_srt'
 	
-	cmd1 = ['/mnt/hds/proj/bioinfo/MICROBIAL/bwa', 'mem', '-t', str(threads), '-M', 
-			ref, 
-			'<(cat {})'.format(*pe_reads_1), 
+	cmd1 = ['/mnt/hds/proj/bioinfo/MICROBIAL/bwa', 'mem', '-t', str(threads), '-M',
+			ref,
+			'<(cat {})'.format(*pe_reads_1),
 			'<(cat {})'.format(*pe_reads_2)]
 	p1 = subprocess.Popen(cmd1, stdout=subprocess.PIPE)
 
@@ -30,8 +31,9 @@ def perform_alignment(sample_name, pe_reads_1, pe_reads_2, ref, threads=1):
 
 	rcode = p3.wait()
 	if rcode != 0:
-		raise subprocess.CalledProcessError(rcode, cmd1+cmd2+cmd3)		
+		raise subprocess.CalledProcessError(rcode, cmd1+cmd2+cmd3)
 	return bamfile_prefix + '.bam'
+
 
 def remove_duplicates(bamfile):
 	"""
@@ -51,5 +53,3 @@ def remove_duplicates(bamfile):
 	if rcode != 0:
 		raise subprocess.CalledProcessError(rcode, cmd)
 	return (bam_rmdup, dup_metrics)
-
-

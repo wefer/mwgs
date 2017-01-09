@@ -4,6 +4,7 @@ import subprocess
 
 from config import PICARD_JAR, JAVA
 
+
 def get_insert_size(bamfile):
 	"""
 	Run Picard tools Collect Insert Size Metrics

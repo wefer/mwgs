@@ -15,7 +15,6 @@ class Reference(object):
 	"""
 	Reference genome object
 	"""
-
 	def __init__(self, ref_nc):
 		self.ref_nc = ref_nc
 		self.ref_folder = os.path.join(REF_FOLDER, ref_nc)
