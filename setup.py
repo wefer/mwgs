@@ -100,7 +100,7 @@ setup(
     ),
     entry_points={
         'console_scripts': [
-            'mwgs = mwgs.store.cli:root',
+            'mwgs = mwgs.cli:root',
         ],
     },
 )
