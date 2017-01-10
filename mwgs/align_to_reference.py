@@ -18,8 +18,8 @@ def perform_alignment(sample_name, pe_reads_1, pe_reads_2, ref, threads=1):
 	bamfile_prefix = sample_name + '_srt.bam'
 	
 	cmd1 = ['bwa', 'mem', '-t', str(threads), '-M', ref,
-			'<(cat {})'.format(*pe_reads_1),
-			'<(cat {})'.format(*pe_reads_2)]
+			'<(cat {})'.format(' '.join(pe_reads_1)),
+			'<(cat {})'.format(' '.join(pe_reads_2))]
 	p1 = subprocess.Popen(cmd1, stdout=subprocess.PIPE)
 
 	cmd2 = ['samtools', 'view', '-bS', '-']
@@ -30,7 +30,7 @@ def perform_alignment(sample_name, pe_reads_1, pe_reads_2, ref, threads=1):
 
 	rcode = p3.wait()
 	if rcode != 0:
-		raise subprocess.CalledProcessError(rcode, cmd1+cmd2+cmd3)
+		raise subprocess.CalledProcessError(rcode, cmd1 + cmd2 + cmd3)
 	return bamfile_prefix
 
 
