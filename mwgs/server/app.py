@@ -35,6 +35,12 @@ def project(project_id):
     )
 
 
+@app.template_filter()
+def percent(value):
+    """Format number as percent."""
+    return round(value * 100, 2)
+
+
 # hookup extensions to app
 Bootstrap(app)
 db = api.connect_app(app)

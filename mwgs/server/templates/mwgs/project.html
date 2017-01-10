@@ -1,9 +1,10 @@
-{% extends "bootstrap/base.html" %}
+{% extends "mwgs/layout.html" %}
 
 {% block content %}
-
   <div class="container-fluid">
-    <h1>Project: {{ project_id }}</h1>
+    <div class="jumbotron">
+      <h1>Project: {{ project_id }}</h1>
+    </div>
 
     <div class="row">
       <div class="col-md-4">
@@ -31,36 +32,41 @@
       </div>
     </div>
     
-    <table class="table table-striped table-bordered">
-     <thead>
-      <tr>
-        <th>Sample</th>
-        <th>Reference Genome</th>
-        <th>Total Reads</th>
-        <th>Median Insert Size</th>
-        <th>Duplication Rate</th>
-        <th>Mapped rate</th>
-        <th>Coverage 10X</th>
-      </tr>
-    </thead>
-    
-    <tbody>
-      {% for sample in samples %}
-      <tr>
-        <td>{{ sample.lims_id }}</td>
-        <td>{{ sample.reference_genome }}</td>
-        <td class="text-right">{{ sample.total_reads }}</td>
-        <td class="text-right">{{ sample.insert_size }}</td>
-        <td class="text-right">{{ sample.duplication_rate | round(3) }}</td>
-        <td class="text-right">{{ sample.mapped_rate | round(3) }}</td>
-        <td class="text-right">{{ sample.coverage_10x | round(3) }}</td>
-      </tr>  
+    <div class="panel panel-default">
+      <table class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th>Sample</th>
+            <th>Reference Genome</th>
+            <th>Total Reads</th>
+            <th>Median Insert Size</th>
+            <th>Duplication Rate</th>
+            <th>Mapped rate</th>
+            <th>Coverage 10X</th>
+          </tr>
+        </thead>
+        
+        <tbody>
+          {% for sample in samples %}
+          <tr>
+            <td>{{ sample.lims_id }}</td>
+            <td>{{ sample.reference_genome }}</td>
+            <td class="text-right">{{ "{:,}".format(sample.total_reads) }}</td>
+            <td class="text-right">{{ sample.insert_size }}</td>
+            <td class="text-right {% if sample.duplication_rate > 0.2 %}bg-warning{% endif %}">
+              {{ sample.duplication_rate|percent }}%
+            </td>
+            <td class="text-right {% if sample.mapped_rate < 0.5 %}bg-warning{% endif %}">
+              {{ sample.mapped_rate|percent }}%
+            </td>
+            <td class="text-right {% if sample.coverage_10x < 0.9 %}bg-warning{% endif %}">
+              {{ sample.coverage_10x|percent }}%
+            </td>
+          </tr>  
 
-      {% endfor %}
-    </tbody>
-
-
-    </table>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
   </div>
 {% endblock %}
