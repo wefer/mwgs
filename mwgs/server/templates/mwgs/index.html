@@ -1,8 +1,10 @@
-{% extends "bootstrap/base.html" %}
+{% extends "mwgs/layout.html" %}
 
 {% block content %}
-
   <div class="container-fluid">
+    <div class="page-header">
+        <h1>Projects</h1>
+    </div>
     <ul class="list-group">
       {% for project in projects %}
         
@@ -10,9 +12,7 @@
           <a href="{{ url_for('project', project_id=project[0]) }}">{{ project[0] }}</a>
          </li>
       {% endfor %}
-    </ul>     
-
-    
+    </ul>    
   </div>
 {% endblock %}
 

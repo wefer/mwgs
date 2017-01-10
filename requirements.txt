@@ -7,3 +7,4 @@ PyYaml
 Flask
 Flask-Bootstrap
 sqlservice
+pymysql
