@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-#!/bin/bash -l
+#! /bin/bash -l
 #SBATCH -A prod001
 #SBATCH -n 16
 #SBATCH -t 40:00:00
@@ -58,7 +58,7 @@ def project(context, email, project_path):
     process = subprocess.Popen(['sbatch', script_path])
     process.wait()
     if process.returncode != 0:
-        click.ehco("ERROR: starting analysis, check the output")
+        click.echo("ERROR: starting analysis, check the output")
         context.abort()
 
 
