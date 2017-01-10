@@ -10,13 +10,14 @@
 #SBATCH --mail-type=FAIL
 #SBATCH --mail-user={email}
 
+shopt -s expand_aliases
 source ~/.bashrc
 source activate micro
 
 for sample_path in {project_path}/*
 do
     echo "processing: ${{sample_path}}"
-    mwgs start "${{sample_path}}" &
+    mwgs start --parallel "${{sample_path}}" &
 done
 
 wait
