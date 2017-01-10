@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-#! /bin/bash -l
+"""#!/bin/bash -l
 #SBATCH -A prod001
 #SBATCH -n 16
 #SBATCH -t 40:00:00
