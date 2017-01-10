@@ -14,7 +14,7 @@ shopt -s expand_aliases
 source ~/.bashrc
 source activate micro
 
-for sample_path in {project_path}/*
+for sample_path in $(find {project_path} -maxdepth 1 -mindepth 1 -type d)
 do
     echo "processing: ${{sample_path}}"
     mwgs start --parallel "${{sample_path}}" &
@@ -23,7 +23,6 @@ done
 wait
 """
 import os
-import signal
 import subprocess
 
 import click
@@ -53,13 +52,10 @@ def project(context, email, project_path):
     email = email or environ_email()
     script = __doc__.format(project=project, email=email,
                             project_path=project_path)
-    script_path = os.path.join(project_path, 'scripts/run.sh')
+    script_path = os.path.join(project_path, 'run.sh')
     with open(script_path, 'w') as out_handle:
         out_handle.write(script)
-    process = subprocess.Popen(
-        ['sbatch', script_path],
-        preexec_fn=lambda: signal.signal(signal.SIGPIPE, signal.SIG_DFL)
-    )
+    process = subprocess.Popen(['sbatch', script_path])
     process.wait()
     if process.returncode != 0:
         click.ehco("ERROR: starting analysis, check the output")
