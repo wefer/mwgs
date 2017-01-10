@@ -32,12 +32,12 @@ def perform_alignment(sample_name, pe_reads_1, pe_reads_2, ref, threads=1):
 	rcode = p3.wait()
 	if rcode != 0:
 		raise subprocess.CalledProcessError(rcode, cmd1+cmd2+cmd3)
-	return bamfile_prefix + '.bam'
+	return bamfile_prefix
 
 
 def remove_duplicates(bamfile):
 	"""
-	Remove duplicates with samtools
+	Remove duplicates with picard-tools
 	"""
 	bam_rmdup = bamfile.replace('.bam', '_rmdup.bam')
 	dup_metrics = bamfile.replace('.bam', '_dupmetr.txt')
