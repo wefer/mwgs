@@ -1,5 +1,29 @@
 # -*- coding: utf-8 -*-
+"""
+#!/bin/bash -l
+#SBATCH -A prod001
+#SBATCH -n 16
+#SBATCH -t 40:00:00
+#SBATCH -J mwgs-{project}
+#SBATCH -e /mnt/hds/proj/bioinfo/MICROBIAL/logs/mwgs-{project}.stderr.txt
+#SBATCH -o /mnt/hds/proj/bioinfo/MICROBIAL/logs/mwgs-{project}.stdout.txt
+#SBATCH --mail-type=FAIL
+#SBATCH --mail-user={email}
+
+source ~/.bashrc
+source activate micro
+
+for sample_path in {project_path}/*
+do
+    echo "processing: ${{sample_path}}"
+    mwgs start "${{sample_path}}" &
+done
+
+wait
+"""
 import os
+import signal
+import subprocess
 
 import click
 import yaml
@@ -16,6 +40,29 @@ def root(context, database):
     context.obj = {
         'database': database or os.environ.get('MWGS_SQL_DATABASE_URI')
     }
+
+
+@root.command()
+@click.option('-e', '--email', help='email to send errors to')
+@click.argument('project_path')
+@click.pass_context
+def project(context, email, project_path):
+    """Process all samples in a project."""
+    project = os.path.basename(project_path)
+    email = email or environ_email()
+    script = __doc__.format(project=project, email=email,
+                            project_path=project_path)
+    script_path = os.path.join(project_path, 'scripts/run.sh')
+    with open(script_path, 'w') as out_handle:
+        out_handle.write(script)
+    process = subprocess.Popen(
+        ['sbatch', script_path],
+        preexec_fn=lambda: signal.signal(signal.SIGPIPE, signal.SIG_DFL)
+    )
+    process.wait()
+    if process.returncode != 0:
+        click.ehco("ERROR: starting analysis, check the output")
+        context.abort()
 
 
 @root.command(context_settings=dict(help_option_names=['-h', '--help']))
@@ -45,3 +92,10 @@ def add(context, statistics):
     sample_data = api.build_sample(data)
     new_sample = db.Sample.save(sample_data)
     click.echo("added sample: {}".format(new_sample.lims_id))
+
+
+def environ_email():
+    """Guess email from sudo user environment variable."""
+    username = os.environ.get('SUDO_USER')
+    if username:
+        return "{}@scilifelab.se".format(username)
