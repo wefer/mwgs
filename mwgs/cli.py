@@ -35,7 +35,7 @@ def start(context, sample_path, parallel):
 @root.command(context_settings=dict(help_option_names=['-h', '--help']))
 @click.argument('statistics', type=click.File('r'))
 @click.pass_context
-def add(context, database, statistics):
+def add(context, statistics):
     """Load results into database."""
     db = api.connect(context.obj['database'])
     if len(db.engine.table_names()) == 0:
