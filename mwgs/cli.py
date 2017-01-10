@@ -15,10 +15,11 @@ def root():
 
 
 @root.command(context_settings=dict(help_option_names=['-h', '--help']))
+@click.option('-p', '--parallel', is_flag=True)
 @click.argument('sample_path')
-def start(sample_path):
+def start(sample_path, parallel):
     """Start an analysis run."""
-    analysis_sample = Sample(sample_path)
+    analysis_sample = Sample(sample_path, parallel=parallel)
     analysis_sample.run_qc()
     analysis_sample.dump_metrics()
 
