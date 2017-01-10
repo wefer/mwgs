@@ -9,28 +9,34 @@ from mwgs.core import Sample
 
 
 @click.group()
-def root():
+@click.option('-d', '--database', help='SQL connection string')
+@click.pass_context
+def root(context, database):
     """Interact with the MWGS pipeline."""
-    pass
+    context.obj['database'] = (database or
+                               os.environ.get('MWGS_SQL_DATABASE_URI'))
 
 
 @root.command(context_settings=dict(help_option_names=['-h', '--help']))
 @click.option('-p', '--parallel', is_flag=True)
 @click.argument('sample_path')
-def start(sample_path, parallel):
+@click.pass_context
+def start(context, sample_path, parallel):
     """Start an analysis run."""
     analysis_sample = Sample(sample_path, parallel=parallel)
     analysis_sample.run_qc()
     analysis_sample.dump_metrics()
+    # upload results to database
+    out_path = os.path.join(sample_path, 'statistics.yml')
+    context.invoke(add, statistics=out_path)
 
 
 @root.command(context_settings=dict(help_option_names=['-h', '--help']))
-@click.option('-d', '--database', help='SQL connection string')
 @click.argument('statistics', type=click.File('r'))
-def add(database, statistics):
+@click.pass_context
+def add(context, database, statistics):
     """Load results into database."""
-    db_uri = database or os.environ['MWGS_SQL_DATABASE_URI']
-    db = api.connect(db_uri)
+    db = api.connect(context.obj['database'])
     if len(db.engine.table_names()) == 0:
         db.create_all()
     data = yaml.load(statistics)
