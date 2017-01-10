@@ -13,8 +13,9 @@ from mwgs.calculate_metrics import get_insert_size, reads_aligned
 
 
 class Sample(object):
-    def __init__(self, sample_path):
+    def __init__(self, sample_path, parallel=False):
         self.sample_path = sample_path
+        self.parallel = parallel
         self.sample_name = path.basename(path.normpath(sample_path))
         self.lims_sample = get_lims_sample(self.sample_name)
         self.sample_ref_nc = get_reference_id(self.lims_sample)
@@ -31,8 +32,13 @@ class Sample(object):
 
     def run_qc(self):
         prefix = path.join(self.sample_path, self.sample_name)
+        if self.parallel:
+            threads = 4
+        else:
+            threads = 1
         alignment = perform_alignment(prefix, self.r1, self.r2,
-                                      self.sample_reference.fasta_file)
+                                      self.sample_reference.fasta_file,
+                                      threads=threads)
         self.bamfile, self.dupmetrics = remove_duplicates(alignment)
         self.total_reads, self.mapped_reads = reads_aligned(self.bamfile)
         (self.insertmetricsfile,
