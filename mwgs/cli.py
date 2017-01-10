@@ -13,8 +13,9 @@ from mwgs.core import Sample
 @click.pass_context
 def root(context, database):
     """Interact with the MWGS pipeline."""
-    context.obj['database'] = (database or
-                               os.environ.get('MWGS_SQL_DATABASE_URI'))
+    context.obj = {
+        'database': database or os.environ.get('MWGS_SQL_DATABASE_URI')
+    }
 
 
 @root.command(context_settings=dict(help_option_names=['-h', '--help']))
