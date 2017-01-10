@@ -29,7 +29,8 @@ def start(context, sample_path, parallel):
     analysis_sample.dump_metrics()
     # upload results to database
     out_path = os.path.join(sample_path, 'statistics.yml')
-    context.invoke(add, statistics=out_path)
+    with open(out_path, 'r') as out_handle:
+        context.invoke(add, statistics=out_handle)
 
 
 @root.command(context_settings=dict(help_option_names=['-h', '--help']))
