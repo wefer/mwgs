@@ -21,7 +21,7 @@ def index():
 
 @app.route('/projects/<project_id>')
 def project(project_id):
-    samples = db.Sample.find(project_id=project_id)
+    samples = db.Sample.filter_by(project_id=project_id)
     duplications = api.plot_data(samples, "duplication_rate")
     mapped = api.plot_data(samples, "mapped_rate")
     coverage = api.plot_data(samples, "coverage_10x")

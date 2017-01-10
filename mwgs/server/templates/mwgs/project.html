@@ -83,6 +83,8 @@
             text: "Duplication rate over time"
           },
           yAxis: {
+            min: 0,
+            max: 1,
             title: {
               text: "% duplications"
             }
@@ -104,7 +106,6 @@
           }]
         })
 
-
         $("#mapped-plot").highcharts({
           chart: {
             type: "spline",
@@ -114,6 +115,8 @@
             text: "% mapped reads"
           },
           yAxis: {
+            min: 0,
+            max: 1,
             title: {
               text: "% mapped"
             }
@@ -144,6 +147,8 @@
             text: "% coverage 10X"
           },
           yAxis: {
+            min: 0,
+            max: 1,
             title: {
               text: "% covered"
             }
