@@ -15,7 +15,7 @@ def perform_alignment(sample_name, pe_reads_1, pe_reads_2, ref, threads=1):
 	Inputs: Sample_name, Forward fastqs, reverse fastqs, index reference genome
 	Returns: .bam filepath
 	"""
-	bamfile_prefix = sample_name + '_srt'
+	bamfile_prefix = sample_name + '_srt.bam'
 	
 	cmd1 = ['/mnt/hds/proj/bioinfo/MICROBIAL/bwa', 'mem', '-t', str(threads), '-M',
 			ref,
