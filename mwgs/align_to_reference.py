@@ -26,7 +26,7 @@ def perform_alignment(sample_name, pe_reads_1, pe_reads_2, ref, threads=1):
 	cmd2 = ['samtools', 'view', '-bS', '-']
 	p2 = subprocess.Popen(cmd2, stdin=p1.stdout, stdout=subprocess.PIPE)
 
-	cmd3 = ['samtools', 'sort', '-', bamfile_prefix]
+	cmd3 = ['samtools', 'sort', '-', '-o', bamfile_prefix]
 	p3 = subprocess.Popen(cmd3, stdin=p2.stdout)
 
 	rcode = p3.wait()
