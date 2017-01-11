@@ -84,8 +84,8 @@ def add(context, statistics):
         db.create_all()
     data = yaml.load(statistics)
     sample_data = api.build_sample(data)
-    existing_sample = db.Sample.filter_by(lims_id=sample_data['lims_id'])
-    if existing_sample.first():
+    existing_sample = db.Sample.filter_by(lims_id=sample_data['lims_id']).first()
+    if existing_sample:
         click.echo("destroying existing samples")
         db.destroy(existing_sample)
     new_sample = db.Sample.save(sample_data)
