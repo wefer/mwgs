@@ -87,7 +87,7 @@ def add(context, statistics):
     existing_sample = db.Sample.filter_by(lims_id=sample_data['lims_id'])
     if existing_sample.first():
         click.echo("destroying existing samples")
-        existing_sample.destroy()
+        db.destroy(existing_sample)
     new_sample = db.Sample.save(sample_data)
     click.echo("added sample: {}".format(new_sample.lims_id))
 
