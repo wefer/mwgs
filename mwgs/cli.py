@@ -13,13 +13,7 @@ shopt -s expand_aliases
 source ~/.bashrc
 source activate micro
 
-for sample_path in $(find {project_path} -maxdepth 1 -mindepth 1 -type d)
-do
-    echo "processing: ${{sample_path}}"
-    mwgs start --parallel "${{sample_path}}" &
-done
-
-wait
+find {project_path} -maxdepth 1 -mindepth 1 -type d | xargs -I {{}} --verbose -n1 -P16 mwgs start --parallel {{}}
 """
 import os
 import subprocess
