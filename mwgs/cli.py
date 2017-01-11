@@ -37,22 +37,26 @@ def root(context, database):
 
 @root.command()
 @click.option('-e', '--email', help='email to send errors to')
+@click.option('-p', '--echo', is_flag=True, help="print script, don't submit")
 @click.argument('project_path')
 @click.pass_context
-def project(context, email, project_path):
+def project(context, email, echo, project_path):
     """Process all samples in a project."""
     project = os.path.basename(project_path)
     email = email or environ_email()
     script = __doc__.format(project=project, email=email,
                             project_path=project_path)
-    script_path = os.path.join(project_path, 'run.sh')
-    with open(script_path, 'w') as out_handle:
-        out_handle.write(script)
-    process = subprocess.Popen(['sbatch', script_path])
-    process.wait()
-    if process.returncode != 0:
-        click.echo("ERROR: starting analysis, check the output")
-        context.abort()
+    if echo:
+        click.echo(script)
+    else:
+        script_path = os.path.join(project_path, 'run.sh')
+        with open(script_path, 'w') as out_handle:
+            out_handle.write(script)
+        process = subprocess.Popen(['sbatch', script_path])
+        process.wait()
+        if process.returncode != 0:
+            click.echo("ERROR: starting analysis, check the output")
+            context.abort()
 
 
 @root.command(context_settings=dict(help_option_names=['-h', '--help']))
