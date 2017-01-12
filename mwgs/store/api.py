@@ -37,9 +37,19 @@ def project(db, project_id):
 
 
 def plot_data(samples, datafield):
-    """Calculate times it takes to analyze a sample."""
+    """Calculate time it takes to analyze a sample."""
     points = [{
         'name': sample.lims_id,
         'y': getattr(sample, datafield),
+    } for sample in samples]
+    return points
+
+
+def plot_reads_coverage(samples):
+    """Plot Total reads vs. Coverage 10x."""
+    points = [{
+        'name': sample.lims_id,
+        'y': sample.coverage_10x,
+        'x': sample.total_reads,
     } for sample in samples]
     return points

@@ -7,7 +7,7 @@
     </div>
 
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-6">
         <div class="panel panel-default">
           <div class="panel-body">
             <div id="duplicationRate"></div>
@@ -15,18 +15,28 @@
         </div>
       </div>
 
-      <div class="col-md-4">
+      <div class="col-md-6">
         <div class="panel panel-default">
           <div class="panel-body">
             <div id="mapped-plot"></div>
           </div>
         </div>
       </div>
+    </div>
 
-      <div class="col-md-4">
+    <div class="row">
+      <div class="col-md-6">
         <div class="panel panel-default">
           <div class="panel-body">
             <div id="coverage-plot"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div id="reads-coverage-plot"></div>
           </div>
         </div>
       </div>
@@ -48,22 +58,21 @@
         
         <tbody>
           {% for sample in samples %}
-          <tr>
-            <td>{{ sample.lims_id }}</td>
-            <td>{{ sample.reference_genome }}</td>
-            <td class="text-right">{{ "{:,}".format(sample.total_reads) }}</td>
-            <td class="text-right">{{ sample.insert_size }}</td>
-            <td class="text-right {% if sample.duplication_rate > 0.2 %}bg-warning{% endif %}">
-              {{ sample.duplication_rate|percent }}%
-            </td>
-            <td class="text-right {% if sample.mapped_rate < 0.5 %}bg-warning{% endif %}">
-              {{ sample.mapped_rate|percent }}%
-            </td>
-            <td class="text-right {% if sample.coverage_10x < 0.9 %}bg-warning{% endif %}">
-              {{ sample.coverage_10x|percent }}%
-            </td>
-          </tr>  
-
+            <tr>
+              <td>{{ sample.lims_id }}</td>
+              <td>{{ sample.reference_genome }}</td>
+              <td class="text-right">{{ "{:,}".format(sample.total_reads) }}</td>
+              <td class="text-right">{{ sample.insert_size }}</td>
+              <td class="text-right {% if sample.duplication_rate > 0.2 %}bg-warning{% endif %}">
+                {{ sample.duplication_rate|percent }}%
+              </td>
+              <td class="text-right {% if sample.mapped_rate < 0.5 %}bg-warning{% endif %}">
+                {{ sample.mapped_rate|percent }}%
+              </td>
+              <td class="text-right {% if sample.coverage_10x < 0.9 %}bg-warning{% endif %}">
+                {{ sample.coverage_10x|percent }}%
+              </td>
+            </tr>
           {% endfor %}
         </tbody>
       </table>
@@ -83,7 +92,7 @@
         $("#duplicationRate").highcharts({
           chart: {
             type: "spline",
-            zoomType: "x"
+            zoomType: "y"
           },
           title: {
             text: "% duplicates"
@@ -92,7 +101,7 @@
             min: 0,
             max: 1,
             title: {
-              text: "% duplications"
+              text: "fraction duplicates"
             }
           },
           plotOptions: {
@@ -115,7 +124,7 @@
         $("#mapped-plot").highcharts({
           chart: {
             type: "spline",
-            zoomType: "x"
+            zoomType: "y"
           },
           title: {
             text: "% mapped reads"
@@ -124,7 +133,7 @@
             min: 0,
             max: 1,
             title: {
-              text: "% mapped"
+              text: "fraction mapped"
             }
           },
           plotOptions: {
@@ -147,7 +156,7 @@
         $("#coverage-plot").highcharts({
           chart: {
             type: "spline",
-            zoomType: "x"
+            zoomType: "y"
           },
           title: {
             text: "% coverage 10X"
@@ -156,7 +165,7 @@
             min: 0,
             max: 1,
             title: {
-              text: "% covered"
+              text: "fraction covered"
             }
           },
           plotOptions: {
@@ -176,6 +185,48 @@
           }]
         })
 
+        $("#reads-coverage-plot").highcharts({
+          chart: {
+            type: "scatter",
+            zoomType: "xy"
+          },
+          title: {
+            text: "Total reads vs. Coverage 10x"
+          },
+          xAxis: {
+            title: {
+              text: 'number of reads'
+            }
+          },
+          yAxis: {
+            min: 0,
+            max: 1,
+            title: {
+              text: "fraction covered"
+            }
+          },
+          plotOptions: {
+            scatter: {
+              marker: {
+                radius: 5,
+                states: {
+                  hover: {
+                    enabled: true,
+                    lineColor: 'rgb(100,100,100)'
+                  }
+                }
+              },
+              tooltip: {
+                headerFormat: '<b>{point.key}</b><br>',
+                pointFormat: '{point.x} reads, {point.y}'
+              }
+            }
+          },
+          series: [{
+            color: 'rgba(223, 83, 83, .5)',
+            data: {{ reads_coverage|tojson|safe }}
+          }]
+        })
     })
   </script>
 {% endblock %}

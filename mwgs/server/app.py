@@ -25,13 +25,15 @@ def project(project_id):
     duplications = api.plot_data(samples, "duplication_rate")
     mapped = api.plot_data(samples, "mapped_rate")
     coverage = api.plot_data(samples, "coverage_10x")
+    reads_coverage = api.plot_reads_coverage(samples)
     return render_template(
         'mwgs/project.html',
         samples=samples,
         project_id=project_id,
         duplications=duplications,
         mapped=mapped,
-        coverage=coverage
+        coverage=coverage,
+        reads_coverage=reads_coverage,
     )
 
 
