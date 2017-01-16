@@ -45,13 +45,14 @@ def root(context, database):
 def project(context, email, echo, project_path):
     """Process all samples in a project."""
     project = os.path.basename(project_path)
+    full_project_path = os.path.abspath(project_path)
     email = email or environ_email()
     script = __doc__.format(project=project, email=email,
-                            project_path=project_path)
+                            project_path=full_project_path)
     if echo:
         click.echo(script)
     else:
-        script_path = os.path.join(project_path, 'run.sh')
+        script_path = os.path.join(full_project_path, 'run.sh')
         with open(script_path, 'w') as out_handle:
             out_handle.write(script)
         process = subprocess.Popen(['sbatch', script_path])
