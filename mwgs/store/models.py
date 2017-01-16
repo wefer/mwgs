@@ -14,6 +14,7 @@ class Sample(Model):
     id = Column(types.Integer, primary_key=True)
     project_id = Column(types.String(32), nullable=False)
     lims_id = Column(types.String(32), unique=True)
+    name = Column(types.String(128))
     created_at = Column(types.DateTime, default=datetime.now)
 
     reference_genome = Column(types.String(32))

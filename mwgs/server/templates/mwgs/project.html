@@ -47,6 +47,7 @@
         <thead>
           <tr>
             <th>Sample</th>
+            <th>External ID</th>
             <th>Reference Genome</th>
             <th>Total Reads</th>
             <th>Median Insert Size</th>
@@ -60,6 +61,7 @@
           {% for sample in samples %}
             <tr>
               <td>{{ sample.lims_id }}</td>
+              <td>{{ sample.name }}</td>
               <td>{{ sample.reference_genome }}</td>
               <td class="text-right">{{ "{:,}".format(sample.total_reads) }}</td>
               <td class="text-right">{{ sample.insert_size }}</td>

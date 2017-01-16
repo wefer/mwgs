@@ -4,22 +4,24 @@ import sys
 from os import path
 import glob
 import subprocess
+
+from genologics.enteties import Sample as LimsSample
 import yaml
 
 from mwgs.reference_handling import Reference
-from mwgs.get_lims_info import get_lims_sample, get_reference_id
 from mwgs.align_to_reference import perform_alignment, remove_duplicates
 from mwgs.calculate_metrics import get_insert_size, reads_aligned
 
 
 class Sample(object):
-    def __init__(self, sample_path, parallel=False):
+    def __init__(self, lims, sample_path, parallel=False):
         self.sample_path = sample_path
         self.parallel = parallel
         self.sample_name = path.basename(path.normpath(sample_path))
-        self.lims_sample = get_lims_sample(self.sample_name)
-        self.sample_ref_nc = get_reference_id(self.lims_sample)
+        self.lims_sample = LimsSample(lims, id=self.sample_name)
+        self.sample_ref_nc = self.lims_sample.udf.get('Reference Genome', '')
         self.project_id = self.lims_sample.project.id
+        self.external_name = self.lims_sample.name
         if not self.sample_ref_nc:
             raise ValueError('No reference found in LIMS')
         self.sample_reference = Reference(self.sample_ref_nc)
@@ -76,6 +78,7 @@ class Sample(object):
         duplicates = self.mapped_reads / self.total_reads
         data = {
             'Sample Name': self.sample_name,
+            'External Name': self.external_name,
             'Project': self.project_id,
             'Reference Genome': self.sample_ref_nc,
             'Total Reads': self.total_reads,

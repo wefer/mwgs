@@ -20,6 +20,7 @@ def build_sample(data):
     """Prepare data to match database interface."""
     parsed = {
         'lims_id': data['Sample Name'],
+        'name': data['External Name'],
         'project_id': data['Project'],
         'reference_genome': data['Reference Genome'],
         'total_reads': data['Total Reads'],

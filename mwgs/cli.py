@@ -19,6 +19,8 @@ import os
 import subprocess
 
 import click
+from genologics import lims
+from genologics.config import BASEURI, USERNAME, PASSWORD
 import yaml
 
 from mwgs.store import api
@@ -65,7 +67,9 @@ def project(context, email, echo, project_path):
 @click.pass_context
 def start(context, sample_path, parallel):
     """Start an analysis run."""
-    analysis_sample = Sample(sample_path, parallel=parallel)
+    # connect to LIMS
+    lims_api = lims.Lims(BASEURI, USERNAME, PASSWORD)
+    analysis_sample = Sample(lims_api, sample_path, parallel=parallel)
     analysis_sample.run_qc()
     analysis_sample.dump_metrics()
     # upload results to database
