@@ -10,12 +10,6 @@ def connect(db_uri):
     return db
 
 
-def connect_app(app):
-    """Connect Flask application."""
-    db = connect(app.config['SQL_DATABASE_URI'])
-    return db
-
-
 def build_sample(data):
     """Prepare data to match database interface."""
     parsed = {

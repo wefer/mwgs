@@ -3,8 +3,10 @@ import os
 
 from flask import Flask, render_template
 from flask_bootstrap import Bootstrap
-from mwgs.store.models import Sample
+
+from mwgs.store.models import Sample, Model
 from mwgs.store import api
+from .flask_sqlservice import FlaskSQLService
 
 app = Flask(__name__)
 BOOTSTRAP_SERVE_LOCAL = 'FLASK_DEBUG' in os.environ
@@ -45,4 +47,4 @@ def percent(value):
 
 # hookup extensions to app
 Bootstrap(app)
-db = api.connect_app(app)
+db = FlaskSQLService(app=app, model_class=Model)
