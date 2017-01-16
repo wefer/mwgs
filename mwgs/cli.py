@@ -13,7 +13,7 @@ shopt -s expand_aliases
 source ~/.bashrc
 source activate micro
 
-find {project_path} -maxdepth 1 -mindepth 1 -type d | xargs -I {{}} --verbose -n1 -P16 mwgs start {{}}
+find {project_path} -maxdepth 1 -mindepth 1 -type d | env_parallel -k mwgs start &>> /mnt/hds/proj/bioinfo/MICROBIAL/logs/mwgs-{project}.log
 """
 import os
 import subprocess
