@@ -5,7 +5,7 @@ from os import path
 import glob
 import subprocess
 
-from genologics.enteties import Sample as LimsSample
+from genologics.entities import Sample as LimsSample
 import yaml
 
 from mwgs.reference_handling import Reference
