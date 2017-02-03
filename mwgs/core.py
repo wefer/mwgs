@@ -19,7 +19,7 @@ class Sample(object):
         self.parallel = parallel
         self.sample_name = path.basename(path.normpath(sample_path))
         self.lims_sample = LimsSample(lims, id=self.sample_name)
-        self.sample_ref_nc = self.lims_sample.udf.get('Reference Genome', '')
+        self.sample_ref_nc = self.lims_sample.udf.get('Reference Genome Microbial', '')
         self.project_id = self.lims_sample.project.id
         self.external_name = self.lims_sample.name
         if not self.sample_ref_nc:
