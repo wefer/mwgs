@@ -47,7 +47,9 @@ class Sample(object):
          self.inserthistfile) = get_insert_size(self.bamfile)
         self.median_insert = self.gather_insert_metrics()
         self.duplication_rate = self.gather_duplication_metrics()
-        self.above_10X = self.gather_fraction_above_10X()
+        self.above_10X = self.gather_fraction_above_cutoff(10)
+        self.above_30X = self.gather_fraction_above_cutoff(30)
+        self.above_50X = self.gather_fraction_above_cutoff(50)
 
     def gather_insert_metrics(self):
         with open(self.insertmetricsfile, 'r') as in_handle:
@@ -63,16 +65,16 @@ class Sample(object):
                 line = in_handle.readline()
             return in_handle.readline().split('\t')[-2]
 
-    def gather_fraction_above_10X(self):
+    def gather_fraction_above_cutoff(self, cutoff):
         cmd = ['samtools', 'depth', self.bamfile]
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         proc_out, proc_error = p.communicate()
         lines = proc_out.decode('utf-8').split('\n')
-        bases_below_10 = 0
+        bases_below_cutoff = 0
         for line in lines[:-1]:
-            if int(line.split('\t')[2]) < 10:
+            if int(line.split('\t')[2]) < cutoff:
                 bases_below_10 += 1
-        return (len(lines) - bases_below_10) / len(lines)
+        return (len(lines) - bases_below_cutoff) / len(lines)
 
     def dump_metrics(self):
         duplicates = self.mapped_reads / self.total_reads
