@@ -86,6 +86,8 @@ class Sample(object):
             'Duplication Rate': self.duplication_rate,
             'Fraction aligned to Reference': duplicates,
             'Fraction of bases with cov >= 10X': self.above_10X,
+            'Fraction of bases with cov >= 30X': self.above_30X,
+            'Fraction of bases with cov >= 50X': self.above_50X,
         }
 
         out_path = path.join(self.sample_path, 'statistics.yml')
