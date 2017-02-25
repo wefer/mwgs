@@ -23,3 +23,5 @@ class Sample(Model):
     duplication_rate = Column(types.Float)
     mapped_rate = Column(types.Float)
     coverage_10x = Column(types.Float)
+    coverage_30x = Column(types.Float)
+    coverage_50x = Column(types.Float)
