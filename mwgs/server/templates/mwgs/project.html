@@ -54,6 +54,8 @@
             <th>Duplication Rate</th>
             <th>Mapped rate</th>
             <th>Coverage 10X</th>
+            <th>Coverage 30X</th>
+            <th>Coverage 50X</th>
           </tr>
         </thead>
         
@@ -73,6 +75,12 @@
               </td>
               <td class="text-right {% if sample.coverage_10x < 0.9 %}bg-warning{% endif %}">
                 {{ sample.coverage_10x|percent }}%
+              </td>
+              <td class="text-right {% if sample.coverage_30x < 0.9 %}bg-warning{% endif %}">
+                {{ sample.coverage_30x|percent }}%
+              </td>
+              <td class="text-right {% if sample.coverage_50x < 0.9 %}bg-warning{% endif %}">
+                {{ sample.coverage_50x|percent }}%
               </td>
             </tr>
           {% endfor %}
