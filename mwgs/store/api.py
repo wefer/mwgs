@@ -22,6 +22,8 @@ def build_sample(data):
         'duplication_rate': data['Duplication Rate'],
         'mapped_rate': data['Fraction aligned to Reference'],
         'coverage_10x': data['Fraction of bases with cov >= 10X'],
+        'coverage_30x': data['Fraction of bases with cov >= 30X'],
+        'coverage_50x': data['Fraction of bases with cov >= 50X'],
     }
     return parsed
 
