@@ -73,7 +73,7 @@ class Sample(object):
         bases_below_cutoff = 0
         for line in lines[:-1]:
             if int(line.split('\t')[2]) < cutoff:
-                bases_below_10 += 1
+                bases_below_cutoff += 1
         return (len(lines) - bases_below_cutoff) / len(lines)
 
     def dump_metrics(self):
