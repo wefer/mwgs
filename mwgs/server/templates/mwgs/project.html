@@ -76,11 +76,11 @@
               <td class="text-right {% if sample.coverage_10x < 0.9 %}bg-warning{% endif %}">
                 {{ sample.coverage_10x|percent }}%
               </td>
-              <td class="text-right {% if sample.coverage_30x < 0.9 %}bg-warning{% endif %}">
-                {{ sample.coverage_30x|percent }}%
+              <td class="text-right {% if (sample.coverage_30x or 0) < 0.9 %}bg-warning{% endif %}">
+                {{ (sample.coverage_30x or 0)|percent }}%
               </td>
-              <td class="text-right {% if sample.coverage_50x < 0.9 %}bg-warning{% endif %}">
-                {{ sample.coverage_50x|percent }}%
+              <td class="text-right {% if (sample.coverage_50x or 0) < 0.9 %}bg-warning{% endif %}">
+                {{ (sample.coverage_50x or 0)|percent }}%
               </td>
             </tr>
           {% endfor %}
