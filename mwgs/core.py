@@ -50,6 +50,7 @@ class Sample(object):
         self.above_10X = self.gather_fraction_above_cutoff(10)
         self.above_30X = self.gather_fraction_above_cutoff(30)
         self.above_50X = self.gather_fraction_above_cutoff(50)
+        self.above_100X = self.gather_fraction_above_cutoff(100)
 
     def gather_insert_metrics(self):
         with open(self.insertmetricsfile, 'r') as in_handle:
@@ -90,6 +91,7 @@ class Sample(object):
             'Fraction of bases with cov >= 10X': self.above_10X,
             'Fraction of bases with cov >= 30X': self.above_30X,
             'Fraction of bases with cov >= 50X': self.above_50X,
+            'Fraction of bases with cov >= 100X': self.above_100X
         }
 
         out_path = path.join(self.sample_path, 'statistics.yml')

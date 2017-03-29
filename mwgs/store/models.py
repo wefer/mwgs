@@ -25,3 +25,4 @@ class Sample(Model):
     coverage_10x = Column(types.Float)
     coverage_30x = Column(types.Float)
     coverage_50x = Column(types.Float)
+    coverage_100x = Column(types.Float)

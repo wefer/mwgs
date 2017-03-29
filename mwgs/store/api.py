@@ -24,6 +24,7 @@ def build_sample(data):
         'coverage_10x': data['Fraction of bases with cov >= 10X'],
         'coverage_30x': data['Fraction of bases with cov >= 30X'],
         'coverage_50x': data['Fraction of bases with cov >= 50X'],
+        'coverage_100x': data['Fraction of bases with cov >= 100X']
     }
     return parsed
 
