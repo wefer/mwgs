@@ -12,7 +12,6 @@
 shopt -s expand_aliases
 source ${{HOME}}/.bashrc
 source activate micro
-source ${{HOME}}/.aliases
 
 find {project_path} -maxdepth 1 -mindepth 1 -type d | env_parallel -k mwgs start
 """
