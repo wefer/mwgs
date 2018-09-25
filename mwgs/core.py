@@ -67,7 +67,7 @@ class Sample(object):
             return in_handle.readline().split('\t')[-2]
 
     def gather_fraction_above_cutoff(self, cutoff):
-        cmd = ['samtools', 'depth', '-a' self.bamfile]
+        cmd = ['samtools', 'depth', '-a', self.bamfile]
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         proc_out, proc_error = p.communicate()
         lines = proc_out.decode('utf-8').split('\n')
