@@ -1,8 +1,9 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 shopt -s nullglob
 shopt -s expand_aliases
-source ~/.bashrc
+source ${HOME}/.bashrc
+source ${HOME}/servers/resources/activate-prod.sh
 set -eu
 
 ########
