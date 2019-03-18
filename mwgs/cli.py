@@ -3,6 +3,7 @@
 #SBATCH -A prod001
 #SBATCH -n 16
 #SBATCH -t 40:00:00
+#SBATCH --qos=high
 #SBATCH -J mwgs-{project}
 #SBATCH -e /mnt/hds/proj/bioinfo/MICROBIAL/logs/mwgs-{project}.stderr.txt
 #SBATCH -o /mnt/hds/proj/bioinfo/MICROBIAL/logs/mwgs-{project}.stdout.txt
